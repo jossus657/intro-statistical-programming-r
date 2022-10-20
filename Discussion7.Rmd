@@ -1,0 +1,34 @@
+---
+title: "week 7 discussion exercises"
+author: "Joshua Susanto"
+date: "5/16/2021"
+output: html_document
+---
+Exercises
+A “thought” exercise - continued from last week. I know some of you didn’t have a chance to answer the first 2 questions last week. Please discuss all 5 questions in your small groups, then we are going to discuss together for the last 10 minutes of class. Be ready to share when I close the breakout rooms!
+
+I have two dataframes as follows. Let’s pretend they’re Instagram users:
+
+The 1st dataframe contains the variables username and sign-up date (Month, Day, Year)
+The 2nd dataframe contains the variables username, session start, and session end (Month, Day, Year, Hour, Minute)
+I want to know:
+
+1: Is there a more common day of the week when people sign up?
+
+For this question we could use the as.Date function in order to convert the column values to R dates. We would have to paste columns together and create a new column for this. After doing this, we could add another column where we unclass the date values in our R date columns. This will tell us how many days since Jan 1, 1970 have passed. We know that Jan 1, 1970 is a Thursday and thus we can take these unclassed R dates and divide each row by 7. We could then create another column where we take the floor value of each of the unclassed R dates. We finally subtract our R dates from our floor values in order to get our remainders that vary from 0, 1/7,2/7,3/7...etc. We know that remainders with 0 will be Thursdays, 1/7 will be mondays etc. We could then use the summary function on the column to see which decimal remainder value appears the most often. 
+
+2: The average amount of time spent on Instagram the day a user signs up.
+
+We can convert these dates using as.date which will gives us a numerical value (including time) when unclassed. We can then subtract these two columns and make a column called session_total. We can then take the sum of this column and divide it by the length of the column to get the average amount of time spent per session. 
+
+3: How many users spent more than 2 hours on the app the day they sign up?
+
+First we could do a merge by username then we can take this new data frame and extract which rows have sign up day equal to the floor of session start. We can then take these values and see where the session total variable in problem to is > 2 hours
+
+4: What are some other questions you might try to answer using this data?
+
+Maybe I would like to see if what year the account was started affected how much on average they would spend on instagram per session. Another question would be what months are people the most active on instagram
+
+5: What additional data might you want to collect? Why?
+
+I would like to maybe collect data on the amount of followers or interactions a user has. I think maybe that would be good data to see how much these factors affect how active users are on instagram. For example a person with a large follow list will naturally have much more posts on their homepage so seeing the average time on instagram would be useful data to see if pushing users to follow more accounts is a good idea for the company.

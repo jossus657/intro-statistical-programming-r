@@ -1,0 +1,43 @@
+---
+title: "Week 1 disc"
+author: "Joshua Susanto 405568250"
+date: "4/3/2021"
+output: html_document
+---
+Equation 1
+```{r}
+7+8
+```
+
+Equation 2
+```{r}
+10/6
+```
+
+Equation 3
+```{r}
+(13/2)^2*pi
+```
+
+Equation 4
+```{r}
+2^2 + 7^2 - 5^2
+```
+
+Equation 5
+```{r}
+((30+5) * 2)/(30^(3/2))
+```
+
+Equation 6
+```{r}
+sqrt(2) * sqrt(2) - 2
+```
+
+For this equation the answer should be 0 but R outputs an answer extremely small 
+that is approximately 0. This is because R acts as a calculator and cannot 
+compute the sqrt(2) * sqrt(2) as 2 like we can. R takes the literal decimal 
+value of rad 2 (which goes on as a decimal) to compute the equation and R 
+has a certain limit of decimal places it is able to store. Thus, while the 
+answer is 0 R will never be able to compute the equation as 0 but as an 
+extremely small and long decimal that is approximately 0.

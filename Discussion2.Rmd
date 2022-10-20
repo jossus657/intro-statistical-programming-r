@@ -1,0 +1,24 @@
+---
+title: "Week 3 Discussion"
+author: "Joshua Susanto"
+date: "4/8/2021"
+output: html_document
+---
+
+```{r}
+View(rivers)
+```
+
+```{r}
+area <- iris$Petal.Length * iris$Petal.Width
+iris[order(area)[1], "Species"]
+```
+
+
+
+when you add a variable using the dollar sign it adds it as a column for yourdata
+```{r}
+View(iris)
+iris[iris$Species == "virginica",]
+```
+

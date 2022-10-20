@@ -1,0 +1,93 @@
+---
+title: "Week 9 Disc Assignment"
+author: "Joshua Susanto 405568250"
+date: "5/28/2021"
+output: html_document
+---
+
+```{r}
+library(dplyr)
+library(readr)
+cp <- read.csv("sb_ca2019_all_csv_v4.txt")
+cpfilt <- cp[,-(1:4)]
+summary(cpfilt)
+class(cpfilt[,1])
+class(cpfilt[,2])
+head(cpfilt)
+
+for(i in 4:28){
+  cpfilt[,i] <- as.numeric(cpfilt[,i])
+}
+ #I tried to find a more efficient way to change these variables to numeric but im not sure if this function worked or how else I could do it.
+
+```
+
+
+What are the demographics represented in the data?
+
+Suggestion: Create a few tables, check if demographics change over time
+
+Are graphics appropriate?
+Could we spin some gold?
+
+From the data we can see that it gives information about how a subgroup of students performed on their exam. We are given general information like total amount of students tested and enrolled in this certain subgroup and their mean scores. The data then focuses on their standardized scores and compares their score with the standard with respect to different areas of learning.
+```{r}
+summary(cpfilt$Test.Type)
+sum(cpfilt$Test.Type != "B")
+sum(cpfilt$Subgroup.ID == 1) 
+unique(cpfilt$Test.Id) #only 2 subjects being tested, math and english 
+length(unique(cpfilt$Subgroup.ID)) #51 different subgroups being tested
+
+#different tables for different subgroups
+sgone <- cpfilt[cpfilt$Subgroup.ID == 1,]
+sgrtwo <- cpfilt[cpfilt$Subgroup.ID == 2,]
+sgthree <- cpfilt[cpfilt$Subgroup.ID == 3,]
+sgfour <- cpfilt[cpfilt$Subgroup.ID == 4,]
+head(sgone)
+
+```
+
+
+What characteristics are low reading scores associated with?
+
+Suggestion: Create a few scatter plots
+
+Think about whether variables are categorical or numeric?
+Can you run a regression to get a quick snapshot?
+
+
+```{r}
+english <- cpfilt[cpfilt$Test.Id == 1,]
+
+nrow(english)
+
+#could also use sample but i wanted an even distribution between points and not completely random points
+meow <- function(x) {
+    m <- c()
+    for(i in 0:x) {
+       if(i%%10000 == 0){
+           y <- i
+           m <- c(m, y)
+       }else{
+         trash <- i
+       }
+    }
+    m
+}
+meow(nrow(english))
+e <- english[meow(nrow(english)),]
+e$Area.1.Percentage.Below.Standard <- as.numeric(e$Area.1.Percentage.Below.Standard)
+e$Area.2.Percentage.Below.Standard <- as.numeric(e$Area.2.Percentage.Below.Standard)
+lme <- lm(e$Area.1.Percentage.Below.Standard ~ e$Area.2.Percentage.Below.Standard)
+plot(e$Area.1.Percentage.Below.Standard ~ e$Area.2.Percentage.Below.Standard, xlab = "Area 2 Percentage Below Standard", ylab = "Area 1 Percentage Below Standard")
+abline(lme, col = "red")
+```
+
+Based on the data provided, how would you evaluate school performance?
+
+Suggestion: First list what steps you would take. Then, time-permitting, implement
+
+Get a sense first for what the data is telling you (EDA)…
+Are graphics useful here?
+
+I think I would use 2 standards to evaluate a school's performance. I would split between math scores and english scores since they cover vastly different skills and is thus unfair to weigh together. Each of these subjects have their specific areas. I think a fair way is to give each school a subscore for math and english. I would first I would have the percentage of each area have a score for how the school performed. Above will receive a 1.5 scale, near will be 1 and below will be 0. I would do this for every area and add up the scores. Since math has 3 areas I will standardize these scores by taking a percentage. The a schools reading score should be out of 1000 while their math score should be out of 750.
