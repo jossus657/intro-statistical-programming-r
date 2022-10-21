@@ -1,0 +1,167 @@
+---
+title: "Lesson 10 + 11 HW"
+author: "Joshua Susanto 405568250"
+date: "5/12/2021"
+output: html_document
+---
+
+# 1
+```{r}
+load("~/Desktop/STATS 20/lesson10_1.rdata")
+
+plot( EP , type = "l", col="black", xlab="Month", ylab = "Cumulative Population", main="Covid Cases as a Proportion of the Total Population 2020") 
+axis(side=1, at = (1:12),labels = (1:12),tick= TRUE)
+lines(LA,col="blue")
+lines(MI,col="green")
+lines(PR,col="pink")
+legend("topleft", legend = c("El Paso","Los Angeles","Miluakee","Providence"), col = c("black","blue","green","pink"), lwd=1)
+```
+
+# 2
+
+```{r fig.height = 8, fig.width =10}
+load(url("http://www.stat.ucla.edu/~vlew/datasets/CHIHOU.RData"))
+boxplot(CHI$value ~ CHI$y_m, col = "yellow",  xlab = "Dates", ylab = "Count of Deaths",  main = "COVID Deaths by Month for Chicago and Houston", las=2)
+boxplot(HOU$value ~ HOU$y_m, add = TRUE, col = "cyan", axes = FALSE, las = 2, at = 1:14 + 0.75)
+legend("top", legend = c("Chicago","Houston"),col = c("yellow","cyan"), pch = 15 )
+```
+
+# 3
+I'm not sure if you wanted the graphs to be literally on the same plot or just on the same output so I did it both ways.
+
+```{r}
+yelp <- read.csv("http://www.stat.ucla.edu/~vlew/datasets/yelp3.csv")
+col2rgb("maroon")
+col2rgb("blue")
+col2rgb("orange")
+c1 <- rgb(176,48,96,max = 255, alpha = 80, names = "lt.maroon")
+c2 <- rgb(0,0,255,max = 255, alpha = 80, names = "lt.blue")
+c3 <- rgb(255,165,0,max = 255, alpha = 80, names = "lt.orange")
+vegan <- yelp[yelp$categories.0 == "Vegan",]
+buffet <- yelp[yelp$categories.0 == "Buffets",]
+sportsbar <- yelp[yelp$categories.0 == "Sports Bars",]
+hV <-hist(vegan$stars, freq = FALSE, plot = FALSE)
+hB <-hist(buffet$stars, freq = FALSE, plot = FALSE)
+hS <- hist(sportsbar$stars, freq = FALSE, plot = FALSE)
+plot(hV, freq = FALSE,col =c3, xlab = "Yelp Review", main = "Yelp Ratings", xlim = c(1,5))
+plot(hB, add = TRUE, freq = FALSE,col = c2)
+plot(hS, add = TRUE, freq = FALSE, col = c1)
+legend("topleft", legend = c("Vegan","Buffet","Sports Bar"), col = c(c3, c2, c1), pch = 1)
+```
+
+```{r fig.height = 10, fig.width =8}
+par(mfrow=c(3,1))
+plot(hV, freq = FALSE,col ="orange", xlab = "Yelp Review", main = "Vegan Ratings", xlim = c(1,5))
+plot(hB, freq = FALSE, xlab = "Yelp Review", main = "Buffet Ratings",col = "blue")
+plot(hS,  freq = FALSE, xlab = "Yelp Review", main = "Sports Bar Ratings",col = "maroon")
+```
+
+# 4
+
+## (A)
+```{r}
+library(ggplot2)
+plot(midwest[,c(5,10,18,19,20,23)], col = "blue" , pch = 20, cex = 0.5)
+```
+
+## (B)
+```{r}
+load("lesson10_4.rdata")
+plot(lesson10_4$dec20 ~ lesson10_4$DEATHS2019, col = lesson10_4$REGION, ylab = "Deaths in December 2020", xlab = "deaths in 2019", main = "December 2020 Deaths in 2019 by Region", pch = 20, cex =1)
+abline(v = mean(lesson10_4$DEATHS2019), col = "red")
+abline(v = median(lesson10_4$DEATHS2019), col = "blue")
+abline(h = mean(lesson10_4$dec20), col = "red")
+abline(h = median(lesson10_4$dec20), col = "blue")
+```
+
+## (C)
+```{r}
+plot(log(lesson10_4$dec20) ~ log(lesson10_4$DEATHS2019), col = lesson10_4$REGION, ylab = "log Deaths in December 2020", xlab = "log deaths in 2019", main = "logDecember 2020 Deaths in 2019 by Region", pch = 20, cex =2)
+lines(lowess(log(lesson10_4$DEATHS2019), log(lesson10_4$dec20)), col="black", lwd = 2)
+lm <- lm(log(lesson10_4$dec20) ~ log(lesson10_4$DEATHS2019))
+abline(lm, col = "red", lwd = 2)
+```
+
+# 5
+
+## (A)
+```{r}
+UCBAdmissions
+par(mfrow=c(1,2))
+barplot(UCBAdmissions[1,1,], col = "green", 
+        main = "Male Applicants by Department", xlab = "Department", ylab = "Count")
+
+barplot(UCBAdmissions[1,2,], col = "yellow", 
+        main = "Female Applicants by Department", xlab = "Department", ylab = "Count")
+```
+
+## (B)
+```{r}
+par(mfrow=c(1,2))
+barplot(as.matrix(UCBAdmissions[1:2,1,]), col = c("green","red"), 
+        main = "Male Applicants Admitted/Rejected by Department", xlab = "Department", ylab = "Count", ylim = c(0,800), cex.main= 0.5)
+legend("topright", legend = c("Rejection","Admission"), col = c("red","green"), pch = 15)
+barplot(as.matrix(UCBAdmissions[1:2,2,]), col = c("green","red"), 
+        main = "Female Applicants Admitted/Rejected by Department", xlab = "Department", ylab = "Count", ylim = c(0,500), cex.main = 0.5)
+legend("topright", legend = c("Rejection","Admission"), col = c("red","green"), pch = 15)
+```
+
+
+remember the main.cex argument
+## (C)
+```{r fig.height = 8, fig.width =10}
+par(mfrow = c(1,2))
+mprop <- prop.table(UCBAdmissions[,1,], 2)
+mprop
+fprop <- prop.table(UCBAdmissions[,2,], 2)
+fprop
+barplot(mprop, col = c("green","red"), main= "Male Applicants PercentAdmitted/Rejected by Department",xlab = "Department", ylab = "Proportion")
+legend("topright", legend = c("Rejection","Admission"), col = c("red","green"), pch = 15)
+barplot(fprop, col = c("green","red"), main= "Female Applicants PercentAdmitted/Rejected by Department",xlab = "Department", ylab = "Proportion")
+legend("topright", legend = c("Rejection","Admission"), col = c("red","green"), pch = 15)
+```
+
+## (D)
+```{r fig.height = 10, fig.width =10}
+UCBAdmissions
+ucb <- apply(UCBAdmissions, 3,c)
+ucb <- ucb[c(2,4,1,3),]
+ucb
+barplot(ucb, beside = T, col = c("red","magenta","green","cyan"), main = "UCB Admissions Grouped Barplot",xlab="Department",ylab="count")
+legend("top", legend = c("Male-Reject","Female-Reject","Male-Admit","Female-Admit"), col = c("red","magenta","green","cyan"), pch = 15)
+```
+LEGENDS EXAMPLES
+```{r}
+plot( 0, type="n", xlim=c(0,5), ylim=c(0,5) )
+A <- matrix( c( c(1,2,3,4), c(2,1,2,4)), ncol=2 )
+B <- matrix( c( c(1,2,3,4), c(1,3,3,2)), ncol=2 )
+lines( A, col="red" )
+points( A, col="blue", pch=15 )
+lines( B, col="green" )
+points( B, col="purple", pch=17 )
+
+legend( x="topleft", 
+        legend=c("Red line, blue points","Green line, purple points"),
+        col=c("red","green"), lwd=1, lty=c(1,2), 
+        pch=c(15,17) )
+
+legend( x="bottomleft", 
+        legend=c("Red line","blue points","Green line","purple points"),
+        col=c("red","blue","green","purple"), lwd=1, lty=c(1,NA,2,NA),
+        pch=c(NA,15,NA,17) )
+
+legend( x="left", 
+        legend=c("Red line, blue points","Green line, purple points"),
+        col=c("red","green"), lwd=1, lty=c(1,2), pch=c(15,17), merge=FALSE )
+
+legend( x="bottomright", 
+        legend=c("Red line","blue points","Green line","purple points"), 
+        col=c("red","blue","green","purple"), lwd=1, lty=c(1,NA,2,NA), 
+        pch=c(NA,15,NA,17), merge=FALSE )
+
+legend( x="topright", 
+        legend=c("Red line, blue points","Green line, purple points"), 
+        col=c("red","blue","green","purple"), lwd=1, lty=c(1,2), 
+        pch=c(15,17), merge=FALSE )
+```
+

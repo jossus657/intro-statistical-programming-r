@@ -1,0 +1,66 @@
+---
+title: "Lesson 7 HW"
+author: "Joshua Susanto"
+date: "4/28/2021"
+output: html_document
+---
+
+# Exercise 1
+
+## 1(A)
+We would be asking if there is any correlation between a state's population and population density and the amount of cases and deaths. We could calculate an infection rate or a mortality rate with this data
+
+# Exercise 2
+
+## 2(A)
+```{r}
+library(DT)
+library(dplyr)
+a <- read.csv("COmostrecent.csv")
+b <- read.csv("COlevel.csv")
+a$location <- paste(a$state,",",a$county)
+b$location <- paste(b$state,",",b$county)
+merged <- merge(a, b, by = "location")
+head(merged)
+merged$infrate <- merged$cases/merged$coPOP
+datatable(merged)
+```
+
+#Exercise 3
+
+## 3(A)
+It may be lower due to the fact that the COlevel dataset is much older and thus there was less data to work with. Additionally, with there may be more rows with the covid data because more places are getting tested with a lot of resources going into finding new data with the pandemic.
+
+## 3(B)
+```{r}
+leftmergeR <- merge(x = b, y = a, by = "location", all.x = TRUE)
+rightmergeR <- merge(x = b, y = a, by = "location", all.y = TRUE)
+```
+
+## 3(C)
+```{r}
+leftmerge <- left_join( x = b, y = a, by = "location")
+rightmerge <- right_join( x = b, y = a, by = "location")
+```
+
+## 3(D)
+```{r}
+jan <- read.csv("STjan20.csv")
+mar <- read.csv("STmar20.csv")
+jul <- read.csv("STjul20.csv")
+oct <- read.csv("SToct20.csv")
+dec <- read.csv("STdec20.csv")
+mar21 <- read.csv("STmar21.csv")
+STmerge <- merge(jan, mar, by = "state", all.y = TRUE)
+names(STmerge)[c(2:9)] <- c("jan_date","jan_flips","jan_cases","jan_deaths","mar_date","mar_flip","mar_cases","mar_deaths")
+STmerge2 <- merge(STmerge, jul, by = "state", all.y = TRUE)
+names(STmerge2)[c(10:13)] <- c("jul_date","jul_flip","jul_cases","jul_deaths")
+STmerge3 <- merge(STmerge2, oct, by = "state", all.y = TRUE)
+names(STmerge3)[c(14:17)] <- c("oct_date","oct_flip","oct_cases","oct_deaths")
+STmerge4 <- merge(STmerge3, dec, by = "state", all.y = TRUE)
+names(STmerge4)[c(18:21)] <- c("dec_date","dec_flip","dec_cases","dec_deaths")
+STmerge5 <- merge(STmerge4, mar21, by = "state", all.y = TRUE)
+names(STmerge5)[c(22:25)] <- c("mar21_date","mar21_flip","mar21_cases","mar21_deaths")
+head(STmerge5)
+```
+

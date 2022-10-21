@@ -1,0 +1,79 @@
+---
+title: "Lesson 13 HW"
+author: "Joshua Susanto 405568250"
+date: "5/17/2021"
+output: html_document
+---
+
+# 2
+```{r}
+library(dplyr)
+library(stringr)
+library(DT)
+```
+
+## A
+```{r}
+x <- paste(c("'Begone, foul dwimmerlaik, lord of carrion! Leave the dead in peace!’\n" ,
+          "A cold voice answered: ‘Come not between the Nazgûl and his prey! Or he will not slay thee in thy turn.","He will bear thee away to the houses of lamentation, beyond all darkness, where thy flesh shall be" ,
+           strwrap("devoured, and thy shriveled mind be left naked to the Lidless Eye.’"),
+           "\n‘Hinder me? Thou fool. No living man may hinder me!’",
+          "\nA sword rang as it was drawn. ‘Do what you will; but I will hinder it, if I may.’",
+           "\nThen Merry heard of all sounds in that hour the strangest. It seemed that Dernhelm laughed, and the clear", 
+           strwrap("voice was like the ring of steel. ‘But no living man am I! You look upon a woman. Éowyn I am, Éomund’s"), 
+           strwrap("daughter. You stand between me and my lord and kin. Begone, if you be not deathless! For living or dark undead, I will smite you if you touch him.’")))
+ tmp <- tempfile()
+writeLines(x, con = tmp)
+readLines(tmp)   
+cat("'Begone, foul dwimmerlaik, lord of carrion! Leave the dead in peace!’\n 
+A cold voice answered: ‘Come not between the Nazgûl and his prey! Or he will not slay thee in thy turn.He will bear thee away to the houses of lamentation, beyond all darkness, where thy flesh shall be 
+devoured, and thy shriveled mind be left naked to the Lidless Eye.’
+\n‘Hinder me? Thou fool. No living man may hinder me!’
+\nA sword rang as it was drawn. ‘Do what you will; but I will hinder it, if I may.’
+\nThen Merry heard of all sounds in that hour the strangest. It seemed that Dernhelm laughed, and the clear
+voice was like the ring of steel. ‘But no living man am I! You look upon a woman. Éowyn I am, Éomund’s
+daughter. You stand between me and my lord and kin. Begone, if you be not deathless! For living or dark undead, I will smite you if you touch him.’")
+```
+
+## B
+```{r}
+fruit <- cat("\U0001f352 \U0001f347 \U0001f34b")
+```
+
+
+# 3
+
+## A
+```{r}
+cat("To have a \\ you need \\\\")
+```
+
+## B
+```{r}
+cat("#800080 is the color and and \\U1F49C is the symbol for this \U1F49C emoji")
+```
+
+
+# 4
+
+## A
+```{r}
+percent_change  <- c(5, -9.89, 4.00, -4.002)
+p <- format(percent_change, digits = 2)
+p
+```
+
+## B
+```{r}
+salary <-  c(18.99, 5060.50, 20091.92, 1254563.11)
+a <- format(salary, digits = 1, scientific = FALSE)
+a
+```
+
+## C
+```{r}
+p_values <- c(0.02, 0.93, 0.0000391, 0.00000000003)
+pv <- format(p_values, scientific = FALSE)
+pv
+```
+

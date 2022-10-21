@@ -1,0 +1,92 @@
+---
+title: "Lesson 9 HW"
+author: "Joshua Susanto 405568250"
+date: "5/4/2021"
+output: html_document
+---
+
+Exercise 1
+```{r}
+library(rvest)
+library(dplyr)
+wiki <- read_html("https://en.wikipedia.org/wiki/List_of_2019_box_office_number-one_films_in_the_United_States")
+
+movies2019 <- wiki %>% 
+  html_nodes(xpath = '//*[@id="mw-content-text"]/div[1]/table[1]') %>%
+  html_table() %>%
+  as.data.frame()
+summary(movies2019)
+head(movies2019)
+movies2019$numeric_gross <- as.numeric(gsub(pattern = "\\$|,", "", x = movies2019$Gross))
+movies2019 <- movies2019[ , -6]
+names(movies2019)[1:5] <- c("week", "weekend_end_date", "film", "gross", "notes")
+summary(movies2019)
+head(movies2019)
+```
+
+## C(1)
+```{r}
+length(unique(movies2019$film))
+```
+
+## C(2)
+```{r}
+end_date <- as.Date(movies2019$weekend_end_date, format = "%B %d, %Y")
+head(end_date)
+```
+
+## C(3)
+```{r}
+month <- factor(months(end_date), levels = c("January","February","March","April","May","June","July","August","September","October","November","December"))
+head(month)
+```
+
+## C(4)
+```{r}
+as.vector(month)
+movies2019$months <- month
+gross_by_month <- c(sum(movies2019$numeric_gross[movies2019$months == "January"]),
+                    sum(movies2019$numeric_gross[movies2019$months == "February"]),
+                    sum(movies2019$numeric_gross[movies2019$months == "March"]),
+                    sum(movies2019$numeric_gross[movies2019$months == "April"]),
+                    sum(movies2019$numeric_gross[movies2019$months == "May"]),
+                    sum(movies2019$numeric_gross[movies2019$months == "June"]),
+                    sum(movies2019$numeric_gross[movies2019$months == "July"]),
+                    sum(movies2019$numeric_gross[movies2019$months == "August"]),
+                    sum(movies2019$numeric_gross[movies2019$months == "September"]),
+                    sum(movies2019$numeric_gross[movies2019$months == "October"]),
+                    sum(movies2019$numeric_gross[movies2019$months == "November"]),
+                    sum(movies2019$numeric_gross[movies2019$months == "December"]))
+head(gross_by_month)
+```
+
+Exercise 2
+
+## A(1)
+```{r}
+load("Lesson09small.RData")
+received <- as.POSIXct(FD09S$received_dttm, format = "%m/%d/%Y %I:%M:%S %p")
+on_scene <- as.POSIXct(FD09S$on_scene_dttm, format = "%m/%d/%Y %I:%M:%S %p")
+head(received)
+head(on_scene)
+```
+
+## A(2)
+```{r}
+diff <- difftime(on_scene, received, units = "mins")
+head(diff)
+```
+
+## A(3)
+```{r}
+summary.POSIXct(diff)
+which(diff < 0)
+received[6861]
+on_scene[6861]
+```
+We can see here that the time they arrived on scene was before the time they received a call which gave in turn gave us a negative difference
+
+
+#%I is used for 12 time while %H is for 24 hour time
+#difference between strptime and as.POSIXct and as.POSIXlt
+#diff between factor and as.factor?? how does label/levels work when the data is not ordered

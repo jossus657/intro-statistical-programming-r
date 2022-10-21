@@ -1,0 +1,50 @@
+---
+title: "Lesson 14 HW"
+author: "Joshua Susanto"
+date: "5/18/2021"
+output: html_document
+---
+
+# 1
+
+```{r}
+options(width = 120)
+load("Lesson14Data.RData")
+```
+
+## A.(1)
+```{r}
+
+Lesson14Data[,2:7] <- lapply(2:7, function(i){gsub("\\$"," ", Lesson14Data[,i])})
+Lesson14Data[,2:7] <- lapply(2:7, function(i){gsub("\\,","", Lesson14Data[,i])})
+Lesson14Data[c(2,3,6,7)]<-lapply(Lesson14Data[c(2,3,6,7)], as.numeric)
+lapply(Lesson14Data[c(2,3,6,7)], summary)
+```
+
+## B.(1)
+```{r}
+Lesson14Data$taxrev1 <- Lesson14Data$prices.taxedMax - Lesson14Data$prices.amountMin
+Lesson14Data$taxrev2 <- Lesson14Data$prices.taxedMin - Lesson14Data$prices.amountMax
+lapply(Lesson14Data[28:29], summary)
+```
+
+# 2
+
+## A.(1)
+```{r}
+tail(sort(tapply(Lesson14Data$prices.amountMax,Lesson14Data$brand, 
+       sum, na.rm=TRUE), decreasing = TRUE), n = 10)
+```
+
+## B.(1)
+```{r}
+Lesson14Data$id <- print(1)
+
+tail(sort(tapply(Lesson14Data$id,Lesson14Data$brand, sum), decreasing = TRUE), n = 10)
+
+head(sort(tapply(Lesson14Data$brand,Lesson14Data$brand, length), decreasing = TRUE), n = 10)
+
+
+```
+
+

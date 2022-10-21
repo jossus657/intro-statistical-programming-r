@@ -1,0 +1,62 @@
+---
+title: "Lesson 12 HW"
+author: "Joshua Susanto"
+date: "5/13/2021"
+output: html_document
+---
+
+# 4
+
+## A.(1)
+```{r}
+library(ggplot2)
+library(dplyr)
+library(mactivate)
+library(DT)
+cards <- c(2:10, "J", "Q", "K", "A")
+suits <- c("♠", "♥", "♦", "♣")
+deck <- paste(rep(cards, length(suits)),  rep(suits, each = length(cards))) 
+sample(x = deck, size = 32, replace = FALSE)
+sample(x = deck, size = 32, replace = TRUE)
+```
+
+## A.(2)
+```{r}
+replicate(8,sample(x = deck, size = 5, replace = FALSE))
+```
+
+## B.(1)
+```{r}
+library(mactivate)
+data(df_hospitals_ortho)
+dim(df_hospitals_ortho)
+df <- df_hospitals_ortho[sample(nrow(df_hospitals_ortho), size = 400, replace = FALSE),]
+```
+
+## B.(2)
+```{r}
+df <- replicate(5,df_hospitals_ortho[sample(nrow(df_hospitals_ortho), size = 200, replace = FALSE),], simplify = "array")
+```
+
+## C.(1)
+```{r}
+df_hospitals_ortho$ID <- rownames(df_hospitals_ortho)
+size <- floor(0.80*nrow((df_hospitals_ortho)))
+trainingval <- sample(nrow(df_hospitals_ortho), size = size)
+training <- df_hospitals_ortho[trainingval,]
+testing <- df_hospitals_ortho[-trainingval,]
+dim(testing)
+table(testing$ID %in% training$ID)
+```
+
+## C.(2)
+```{r}
+split <- sample(1:3, size=nrow(df_hospitals_ortho), prob=c(0.6,0.20,0.20), replace = TRUE)
+table(split)
+train <- df_hospitals_ortho[split == 1, ]
+valid <- df_hospitals_ortho[split == 2, ]
+test <- df_hospitals_ortho[split == 3, ]
+table(valid$ID %in% train$ID)
+table(valid$ID %in% test$ID)
+table(test$ID %in% train$ID)
+```

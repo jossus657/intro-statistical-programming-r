@@ -1,0 +1,74 @@
+---
+title: "Lesson 4 HW"
+author: "Joshua Susanto 405568250"
+date: "4/13/2021"
+output: html_document
+---
+
+# 1
+
+## A(1)
+```{r}
+library(tuneR)
+load(url("http://www.stat.ucla.edu/~vlew/datasets/ucpay2016.RData"))
+save(ucpay, file="ucpay.RData")
+load(url("http://www.stat.ucla.edu/~vlew/datasets/ucpay2017.RData"))
+save(uclaPayroll2017, file="uclaPayroll2017.RData")
+head(ucpay)
+head(uclaPayroll2017)
+```
+
+
+## B(1)
+```{r}
+save(ucpay, uclaPayroll2017, file ="ucdata.RData")
+```
+
+## B(2)
+```{r}
+save.image("lesson4.RData")
+load("lesson4.RData")
+```
+
+## C(1)
+```{r}
+saveRDS(ucpay, file="ucpay2.RData")
+```
+
+## C(2)
+```{r}
+ucpay <- readRDS("ucpay2.RData")
+```
+
+## C(3)
+A potential option is to store all objects of R into a single list and then use the saveRDS function to save this new object into a single file.
+
+# 2
+
+## A(1)
+```{r}
+mean(uclaPayroll2017[,16])
+median(uclaPayroll2017[,16])
+```
+
+## A(2)
+```{r}
+mean(uclaPayroll2017$DefinedBenefitPlanContribution)
+median(uclaPayroll2017$DefinedBenefitPlanContribution)
+```
+
+## A(3)
+```{r}
+uclaPayroll2017[(uclaPayroll2017$OtherPay >= 1000000 ), c(5, 12, 15, 16)]
+```
+
+## B(1)
+```{r}
+B <- uclaPayroll2017[(uclaPayroll2017$TotalWages >= 800000) & (uclaPayroll2017$RegularPay >= 400000), c(1:3, 5, 10, 12, 15, 16, 21 )]
+```
+
+## B(2)
+```{r}
+str(B)
+```
+

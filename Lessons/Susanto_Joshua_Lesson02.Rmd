@@ -1,0 +1,166 @@
+---
+title: "lesson 2 hw"
+author: "Joshua Susanto 405568250"
+date: "4/8/2021"
+output: html_document
+---
+
+#1 R the Calculator
+
+##A(1)
+```{r}
+9 / 3 + 7 * 5 * 6 + 16
+```
+
+##A(2)
+```{r}
+24 / 3 * 4 - 3 + 7
+```
+
+##A(3)
+```{r}
+10 - 4 + 7 + 3 * (24 / 4)
+```
+
+##A(4) (all of the following should give TRUE)
+```{r}
+3 < 4
+22 > -21
+4 <= 4
+9 >= 5
+17 == 17
+293 != 394
+```
+
+##B(1)
+```{r}
+sqrt(16) / 2^3
+```
+
+##B(2)
+```{r}
+2*sinpi(30/180) + 3*cospi(60/180) - 3*tanpi(0.25)
+```
+
+##B(3)
+```{r}
+(abs(51)-5)/-4
+```
+
+
+#2 Creating and Using R Objects
+
+##A(1)
+```{r}
+the_object <- 13
+```
+
+##A(2)
+```{r}
+`chicken and rice` <- 122
+```
+
+##A(3)
+```{r}
+`5Big` <- 83
+```
+
+##A(4)
+```{r}
+`Pog?` <- 3
+```
+
+
+##3 Vector Practice
+
+#A(1)
+```{r}
+c(2,7,4,2,6,4,2)
+```
+
+#A(2)
+```{r}
+f <- seq(1,1000,1)
+tail(f)
+```
+
+#A(3)
+```{r}
+g <- seq(1,1001,2)
+tail(g)
+```
+
+#A(4)
+```{r}
+LogNile <- log(Nile)
+```
+
+#B(1)
+```{r}
+c("Susanto","Joshua","UCLA")
+```
+
+#B(2)
+```{r}
+rep(c("A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y"), each = 4)
+```
+
+#C(1)
+```{r}
+c(TRUE,FALSE,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,TRUE,TRUE)
+```
+
+#C(2)
+```{r}
+h <- c(TRUE,FALSE,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,TRUE,TRUE)
+```
+
+
+```{r}
+h^2
+#We get that the TRUEs yielded 1s while the FALSEs yielded 0s resulting in the following vector.
+```
+
+#C(3)
+```{r}
+i <- h
+i + 3
+#We find that TRUEs was quantified by using 1s while FALSE was quantified with 0 resulting in the following vector.
+```
+
+#C(4)
+```{r}
+#Like mentioned previously I suppose that when math is appplied TRUE acts as 1 while FALSE acts as 0.
+```
+
+
+##4 Reserved Words
+
+#A(1)
+```{r}
+log(c(TRUE,FALSE,TRUE,TRUE,TRUE,FALSE,FALSE,FALSE,TRUE,TRUE))
+```
+
+#A(2)
+```{r}
+1/0
+#We get infinity as our answer
+```
+
+##5 Help in R
+
+#A(1)
+```{r}
+help(log)
+```
+
+#A(2)
+```{r}
+?Trig
+```
+
+#A(3)
+```{r}
+help(matmult)
+```
+

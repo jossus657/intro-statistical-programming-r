@@ -1,0 +1,62 @@
+---
+title: "Lesson 6 HW"
+author: "Joshua Susanto 405568250"
+date: "4/21/2021"
+output: html_document
+---
+
+# 1
+
+## A(1)
+```{r}
+library(readr)
+listA <- list(iris, c(1:10))
+```
+
+## A(2)
+```{r}
+listN <- list( iris = iris, atomic = c(1:10))
+
+```
+
+## B(1)
+```{r}
+mymodel <- lm(swiss$Infant.Mortality ~ swiss$Fertility)
+str(mymodel)
+```
+
+## B(2)
+```{r}
+mymodel$residuals
+mymodel[2]
+mymodel[[2]]
+```
+
+## B(3)
+```{r}
+str(mymodel)
+mymodel$model
+```
+This code gives us the original variables used to create the linear model
+
+# 2
+
+## A(1)
+```{r}
+library(rvest)
+wiki <- read_html("https://en.wikipedia.org/wiki/List_of_pasta")
+
+pasta <- wiki %>% 
+    html_nodes(xpath = '//*[@id="mw-content-text"]/div/table') %>%
+    html_table()
+short <- pasta[[2]]
+
+```
+
+## A(2)
+```{r}
+types <- c(pasta[[1]]$Type, pasta[[2]]$Type, pasta[[3]]$Type, pasta[[4]]$Type, pasta[[5]]$Type, pasta[[6]]$Type)
+typesB <- unique(types)
+length(typesB)
+```
+

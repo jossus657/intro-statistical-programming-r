@@ -1,0 +1,98 @@
+---
+title: "Lesson 3 - Vectors"
+author: "Joshua Susanto 405568250"
+date: "4/12/2021"
+output: html_document
+---
+
+## 5A
+
+1.
+```{r}
+load("Lesson3.rdata")
+ls()
+```
+
+2.
+ 7 objects were saved in Lesson 3's data.
+ 
+3. 
+```{r}
+is.atomic(Q5A_MAR21)
+is.atomic(Q5Alist)
+is.atomic(Q5B)
+is.atomic(Q5C)
+is.atomic(Q5D200430)
+is.atomic(Q5D201231)
+is.atomic(Q5D210331)
+
+#5 Are atomic and 2 are generic
+```
+
+4.
+```{r}
+save(Q5Alist, file="q5a.rdata")
+```
+
+
+## 5B
+
+1.
+```{r}
+Q5BS <- Q5B[Q5B > 0]
+```
+
+2.
+```{r}
+length(Q5BS)
+```
+
+3.
+```{r}
+median(Q5B)
+```
+
+4.
+```{r}
+sort5b <- sort(Q5B)
+(sort5b[(length(sort5b)/2)] + sort5b[(length(sort5b)/2)+1])/2
+```
+
+## 5C
+
+1.
+```{r}
+
+Q5C[c(-3,-10,-11,-14,-15,-45,-40,-53)]
+
+```
+
+2.
+```{r}
+head(Q5D210331)
+head(Q5B)
+#The first one has the names of the states assigned to every component while the second one only has the values.
+```
+
+3.
+```{r}
+names(Q5D210331) <- Q5C
+identical(Q5B, Q5D210331)
+```
+
+## 5D
+
+1.
+```{r}
+which(Q5D210331 == Q5D210331["California"])
+Q5D200430[6]
+Q5D201231[6]
+Q5D210331[6]
+```
+
+2.
+```{r}
+Q5D201231[6] - Q5D200430[6]
+Q5D210331[6] - Q5D201231[6]
+```
+

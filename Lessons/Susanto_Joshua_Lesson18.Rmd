@@ -1,0 +1,72 @@
+---
+title: "Lesson 18 HW"
+author: "Joshua Susanto 405568250"
+date: "6/11/2021"
+output: html_document
+---
+
+## 1
+```{r}
+a <- rep(1:22, 3) #a vector or string is inputted and is repeated however many times as the second argument asks for
+```
+
+## 2
+```{r}
+unique(a) #gives the unique values of a vector or all the unique entries in a data frame
+duplicated(a) #duplicated outputs a logical vector where TRUE means that the entry has been previously present while false means that this is the first unique entry
+```
+
+## 3
+```{r}
+which(a == 4) #which function takes a logical input and returns the entry number(s) where TRUE is obtained
+```
+
+## 4
+```{r}
+b <- (1:length(a))
+b <- as.character(b)
+ab <- as.data.frame(a,b)
+dim(ab) #gives the amount of rows and columns
+dimnames(ab) #gives names of the columns and entry numbers of the rows
+```
+
+## 5
+```{r}
+sort(a) #sort sorts by numerical or factorial order
+co <- c(1,3,2,4,5,3,1,3)
+order(co) #order rearranges by what entry numbers would make the values be in sorted order and doesnt sort the values themselves
+```
+
+## 6
+```{r}
+1 == 1 #will yield true if equal false if not
+1 != 3 #will yield true if inequal false if not
+3 > 4 # if the number on the left is greater than the value on the right will yield true and vice versa
+3 >= 3 #if the value on the left is greater than or equal to the value on the right will yield true and vice versa
+5 < 2 #if less than will yield true if not will yield false
+6 <= 1 #if less than or equal to will yield true if not will yield false
+```
+
+## 7
+```{r}
+a %in% 5
+c("meow","cat","meow") %in% "meow"
+#gives true when the entry numbers where the value on the right matches with the vector or data frame given
+```
+
+## 8
+```{r}
+readline(prompt = "today was a great day")
+#reads the prompt and returns it in the console
+```
+
+## 9
+```{r}
+paste("hello","world", sep = " ") #paste joins 2 objects or entries together with a separator that you can manually input
+```
+
+## 10
+```{r}
+is.na(c(1,2,3,4,5, NA)) #input an object and will return whether or not that value is an NA or not for each entry (can be used for single entries)
+```
+

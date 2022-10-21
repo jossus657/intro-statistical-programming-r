@@ -1,0 +1,89 @@
+---
+title: "Lesson 17 HW"
+author: "Joshua Susanto 405568250"
+date: "6/5/2021"
+output: html_document
+---
+
+# 1 
+
+## 1(A)
+```{r}
+library(carData)
+summary(Sahlins)
+plot(Sahlins$acres ~ Sahlins$consumers, main = "Scatterplot of Acres (y) versus Consumers (x)", xlab = "Consumers", ylab = "Acres")
+```
+From the plot we can see not much of any relationship between the two variables. Maybe a very weak positive linear relationship can be seen. There are many outliers with some points having a very low consumption need yet very high workload.
+
+## 1(B)
+```{r}
+group1 <- Sahlins[1:7,]
+group2 <- Sahlins[8:13,]
+group3 <- Sahlins[14:20,]
+meanX <- c(mean(group1$consumers),mean(group2$consumers),mean(group3$consumers))
+meanY <- c(mean(group1$acres),mean(group2$acres),mean(group3$acres))
+plot(Sahlins$acres ~ Sahlins$consumers, main = "Scatterplot of Acres (y) versus Consumers (x)", xlab = "Consumers", ylab = "Acres")
+points(meanY ~ meanX, col = "red", pch = 16, type = "b")
+abline(lm(meanY ~ meanX), col = "blue")
+```
+
+## 1(C)
+```{r}
+head(Sahlins)
+class(rownames(Sahlins))
+Sahlins$group <- cut(as.numeric(rownames(Sahlins)), breaks = c(0 , 7, 13, 20), labels = c(1, 2, 3))
+boxplot(acres ~ group, data = Sahlins, main = "1.(c) Boxplot of acres by group")
+```
+
+
+## 1(D)
+```{r}
+which(Sahlins$acres == max(as.numeric(Sahlins$acres)))
+group1 <- group1[-4,]
+meanX <- c(mean(group1$consumers),mean(group2$consumers),mean(group3$consumers))
+meanY <- c(mean(group1$acres),mean(group2$acres),mean(group3$acres))
+plot(Sahlins$acres ~ Sahlins$consumers, main = "Scatterplot of Acres (y) versus Consumers (x)", xlab = "Consumers", ylab = "Acres")
+points(meanY ~ meanX, col = "red", pch = 16, type = "b")
+abline(lm(meanY ~ meanX), col = "blue")
+```
+
+# 2
+
+## 2(A)
+```{r}
+op <- read.csv("ophthalmology.csv")
+op$max.pressure <- apply(op[8:13],1, max)
+ a <- order(op$Fluid.at.24h)
+plot(op$max.pressure ~ op$Fluid.at.24h, main = "Scatterplot of Max Pressure vs Fluid at 24 Hr with OLS line and LOESS lines", xlab = "Fluid at 24 Hours", ylab = "Max Pressure")
+abline(lm(op$max.pressure ~ op$Fluid.at.24h))
+ls <- loess(op$max.pressure ~ op$Fluid.at.24h, family = "symmetric")
+lines(op$Fluid.at.24h[a], ls$fitted[a], col = "blue" ,lwd = 1)
+ls2 <- loess(op$max.pressure ~ op$Fluid.at.24h, family = "gaussian")
+lines(op$Fluid.at.24h[a], ls2$fitted[a], col = "red" ,lwd = 1)
+legend("topright", legend = c("OLS","Loess symmetric","Loess Gaussian"), col = c("black","red","blue"),lwd = 1)
+```
+
+## 2(B)
+```{r}
+a <- order(op$Fluid.at.24h)
+plot(log(op$max.pressure) ~ op$Fluid.at.24h, main = "Scatterplot of Log Max Pressure vs Fluid at 24 Hr with OLS line and LOESS lines", xlab = "Fluid at 24 Hours", ylab = "Max Pressure")
+abline(lm(log(op$max.pressure) ~ op$Fluid.at.24h))
+ls3 <- loess(log(op$max.pressure) ~ op$Fluid.at.24h, family = "symmetric")
+lines(op$Fluid.at.24h[a], ls3$fitted[a], col = "blue" ,lwd = 1)
+ls4 <- loess(log(op$max.pressure) ~ op$Fluid.at.24h, family = "gaussian")
+lines(op$Fluid.at.24h[a], ls4$fitted[a], col = "red" ,lwd = 1)
+legend("topright", legend = c("OLS","Loess symmetric","Loess Gaussian"), col = c("black","red","blue"),lwd = 1)
+```
+
+## 2(C)
+```{r}
+a <- order(op$Fluid.at.24h)
+plot(log(op$max.pressure) ~ log(op$Fluid.at.24h), main = "Scatterplot of Log Max Pressure vs Log Fluid at 24 Hr with OLS line and LOESS lines", xlab = "Fluid at 24 Hours", ylab = "Max Pressure")
+abline(lm(log(op$max.pressure) ~ log(op$Fluid.at.24h)))
+ls5 <- loess(log(op$max.pressure) ~ log(op$Fluid.at.24h), family = "symmetric")
+lines(log(op$Fluid.at.24h[a]), ls5$fitted[a], col = "blue" ,lwd = 1)
+ls6 <- loess(log(op$max.pressure) ~ log(op$Fluid.at.24h), family = "gaussian")
+lines(log(op$Fluid.at.24h[a]), ls6$fitted[a], col = "red" ,lwd = 1)
+legend("topright", legend = c("OLS","Loess symmetric","Loess Gaussian"), col = c("black","red","blue"),lwd = 1)
+```
+

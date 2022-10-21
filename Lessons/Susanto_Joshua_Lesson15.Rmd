@@ -1,0 +1,104 @@
+---
+title: "Lesson 15 HW"
+author: "Joshua Susanto 405568250"
+date: "5/27/2021"
+output: html_document
+---
+
+I tried to make multiple functions for some problems for practice
+
+# 1
+
+## A
+```{r}
+h <- function(x) {
+    vec <- c()
+    for(i in 0:x) {
+        y <- 3^i
+        vec <- c(vec, y)
+    }
+    return(vec)
+}
+
+sum(h(5))
+```
+
+```{r}
+vec <- c()
+for(i in 0:5) {
+  y <- 3^i
+        vec <- c(vec, y)
+        print(sum(vec))
+}
+```
+
+```{r}
+y = 0
+
+for(i in 0:5){
+  y <- 3^i + y
+  if(i == 5){
+print(y)
+  }
+}
+```
+
+## B
+```{r}
+i <- 0
+b <- c()
+while (i < 6) {
+      a <- 3^i
+      b <- c(b, a)
+        i = i+1
+}
+sum(b)
+```
+
+```{r}
+y = 0
+i <- 0
+while (i < 6) {
+  y <- 3^i + y
+  i = 1 + i
+  if(i == 6){
+print(y)
+  }
+}
+```
+
+
+## C
+```{r}
+sum(3^(0:5))
+```
+
+# 2
+```{r}
+x <- 6
+
+for (i in 1:3) {
+  if (x %% 3 == 0) {
+    x <- x/3
+  } else {
+    x <- 3*x + 1
+  }
+}
+
+```
+
+## A
+
+The first line sets the object x equal to 6. The second line utilizes a for loop for i from 1 through 3. Embedded within this first for loop is an if function with the condition that the remainder of x divided by 3 is equal to 0. In this case x is still 6 so x %% 3 is  0. This activates the condition and x is now divided by 3 and our new x value is 2. With our second loop (i = 2) we enter the if function again but with our x value equal to 2 now. 2 divided by three has a remainder and is thus not equal to 0. This activated the else function where we now compute the new x to be 7. We enter the loop for the final time (i = 3) with our new x being equal to 7. Checking the if condition again we find that 7 is also not divisible by 3 and the else loop is activated. We then finally compute x to be 3*7 + 1 which would make x finish as 22.
+
+## B
+```{r}
+x <- 6
+
+for (i in 1:3) {
+  ifelse(x %% 3 == 0, x <- x/3, x <- 3*x +1) 
+  x <- x
+}
+
+```
+

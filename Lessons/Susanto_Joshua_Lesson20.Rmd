@@ -1,0 +1,88 @@
+---
+title: "Lesson 20 HW"
+author: "Joshua Susanto 405568250"
+date: "6/7/2021"
+output: html_document
+---
+
+## 1
+```{r}
+load("Lesson20Data.RData")
+A <- as.data.frame(CrimesA)
+B <- as.data.frame(CrimesB)
+ABmerge <- merge(x = A, y = B, by = "ID.Number")
+dim(ABmerge)
+```
+
+## 2
+```{r}
+class(ABmerge$Arrest)
+ABmerge$Arrest <- as.logical((ABmerge$Arrest))
+class(ABmerge$WARD)
+ABmerge$WARDc <- as.numeric(ABmerge$WARD)
+sum(ABmerge$Arrest == TRUE)/length(ABmerge$Arrest)
+mean(ABmerge$Arrest)
+ward <- tapply( ABmerge$Arrest, ABmerge$WARD, mean)
+summary(ward)
+```
+
+## 3
+```{r}
+ABmerge$primary.type <- as.character(ABmerge$primary.type)
+unique(ABmerge$primary.type)
+ABmerge$PARTONE <- ABmerge$primary.type %in% c("arson" , "burglary" , "criminal sexual assault" , "crim sexual assault" , "homicide" , "motor vehicle theft" , "robbery" , "aggravated assault")
+head(ABmerge$PARTONE, n = 50)
+```
+
+```{r}
+sort(tapply(ABmerge$PARTONE, ABmerge$WARD, mean), decreasing = TRUE)
+```
+
+## 4
+```{r}
+ABmerge$CRIME.DATE <-  as.character(ABmerge$CRIME.DATE)
+ABmerge$month <- substr(ABmerge$CRIME.DATE,1,2)
+ABmerge$month <- as.numeric(ABmerge$month) #adds an order to our variable
+sort(tapply(ABmerge$Arrest,ABmerge$month,sum), decreasing = TRUE)
+sort(table(ABmerge$month), decreasing = TRUE)
+```
+From these tables we can see that mid year tends to have the greatest amount of cases as compared to other months, with May, June, July, and August topping the cumulative cases list. In terms of arrest totals, the list seems to be pretty evenly mixed. We can see and conclude though that cases do tend to increase in the summer or mid year.
+## 5
+```{r}
+head(ABmerge$BLOCK)
+ABmerge$BLOCK <- as.character(ABmerge$BLOCK)
+ABmerge$street <- gsub("...XX","",ABmerge$BLOCK)
+head(ABmerge$street)
+head(sort(table(ABmerge$street), decreasing = TRUE)) 
+street <- table(ABmerge$street)
+street[which(street == max(street))]
+ABmerge$homicide <- ABmerge$primary.type == "homicide"
+head(sort(tapply(ABmerge$homicide,ABmerge$street,sum), decreasing = TRUE))
+```
+
+## 6 
+```{r}
+set.seed(405568250)
+sample <- ABmerge[sample(nrow(ABmerge), size = 5000, replace = FALSE),]
+sort(tapply(sample$PARTONE, sample$WARD, mean), decreasing = TRUE)
+```
+
+## 7
+```{r}
+sum.of.type <- sort(tapply(ABmerge$primary.type,ABmerge$primary.type, length), decreasing = TRUE)
+sum.of.type <- sum.of.type[which(sum.of.type >= 1000)]
+sum(sum.of.type)
+over1k <- names(sum.of.type)
+over1kDF <- ABmerge[ABmerge$primary.type %in% over1k,]
+names(head(sort(tapply(over1kDF$Arrest,over1kDF$primary.type, mean), decreasing = TRUE), n = 10))
+#highest proportion with respect to the individual crime or overall amount of cases?
+```
+
+## 8
+```{r}
+barplot(head(sort(table(ABmerge$location.description)),n = 10), names.arg = c(head(names(sort(table(ABmerge$location.description)))), n = 10), xlab = "Location", ylab = "Total Cases", col = c(1:23), cex.names = 0.5)
+        
+        head(names(sort(table(ABmerge$location.description))), n = 10)
+        barplot(head(sort(table(ABmerge$location.description)),n = 10))
+```
+This barplot gives us a distribution of the amount of cases per district. As we can see the cases vary by district area. The data is sorted for easier use. We can see that districts 6,7,8, and 11 have the highest cases while districts 31 and 20 have the lowest. We can also see that most other districts in between the two extrema are relatively close together. The districts with the highest cases may be worth looking into more, there may perhaps be more factors as to why there are so many more cases in district 11 rather than district 20.

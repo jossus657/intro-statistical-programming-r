@@ -1,0 +1,16 @@
+---
+title: "Susanto_Joshua_Lesson01"
+author: "Joshua Susanto 405568250"
+date: "4/5/2021"
+output: html_document
+---
+
+![3A-Start Up Screen](lesson1-3a.png)
+
+![3B - Package Install](3b_lesson1.png)
+
+![4D - R Markdown Demo Result](4d_lesson1.png)
+
+![5E - Shiny Demo Result](5e_lesson1.png)
+
+![6D - R Script saved result](6d_lesson1.png)
